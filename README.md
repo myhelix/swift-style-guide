@@ -30,7 +30,7 @@ This guide was last updated for Swift 4.0 on February 14, 2018.
 ## 1. Code Formatting
 
 * **1.1** Use 4 spaces for tabs.
-* **1.2** Avoid uncomfortably long lines with a hard maximum of 160 characters per line (Xcode->Preferences->Text Editing->Page guide at column: 160 is helpful for this)
+* **1.2** Avoid uncomfortably long lines with a hard maximum of 150 characters per line (Xcode->Preferences->Text Editing->Page guide at column: 150 is helpful for this)
 * **1.3** Ensure that there is a newline at the end of every file.
 * **1.4** Ensure that there is no trailing whitespace anywhere (Xcode->Preferences->Text Editing->Automatically trim trailing whitespace + Including whitespace-only lines).
 * **1.5** Do not place opening braces on new lines - we use the [1TBS style](https://en.m.wikipedia.org/wiki/Indentation_style#1TBS).
@@ -129,18 +129,18 @@ someFunctionWithManyArguments(
     thirdArgument: someOtherLocalProperty)
 ```
 
-* **1.11** When dealing with an implicit array or dictionary large enough to warrant splitting it into multiple lines, treat the `[` and `]` as if they were braces in a method, `if` statement, etc. Closures in a method should be treated similarly.
+* **1.11** When dealing with an implicit array or dictionary large enough to warrant splitting it into multiple lines, treat the `[` and `]` as if they were braces in a method, `if` statement, etc. Closures in a method should be treated similarly. In these situations, a comma should also be added at the end of every entry, including the final one.
 
 ```swift
 someFunctionWithABunchOfArguments(
     someStringArgument: "hello I am a string",
     someArrayArgument: [
         "dadada daaaa daaaa dadada daaaa daaaa dadada daaaa daaaa",
-        "string one is crazy - what is it thinking?"
+        "string one is crazy - what is it thinking?",
     ],
     someDictionaryArgument: [
         "dictionary key 1": "some value 1, but also some more text here",
-        "dictionary key 2": "some value 2"
+        "dictionary key 2": "some value 2",
     ],
     someClosure: { parameter1 in
         print(parameter1)
@@ -454,7 +454,7 @@ imageView.backgroundColor = UIColor.white
 imageView.backgroundColor = .white
 ```
 
-* **3.1.11** Prefer not writing `self.` unless it is required.
+* **3.1.11** Prefer not writing `self.` unless it is required, with the exception of initializing properties within an `init`.
 
 * **3.1.12** When writing methods, keep in mind whether the method is intended to be overridden or not. If not, mark it as `final`, though keep in mind that this will prevent the method from being overwritten for testing purposes. In general, `final` methods result in improved compilation times, so it is good to use this when applicable. Be particularly careful, however, when applying the `final` keyword in a library since it is non-trivial to change something to be non-`final` in a library as opposed to have changing something to be non-`final` in your local project.
 
@@ -705,7 +705,7 @@ let completionBlock: () -> Void = {
 let completionBlock: (() -> Void)? = nil
 ```
 
-* **3.8.3** Keep parameter names on same line as the opening brace for closures when possible without too much horizontal overflow (i.e. ensure lines are less than 160 characters).
+* **3.8.3** Keep parameter names on same line as the opening brace for closures when possible without too much horizontal overflow (i.e. ensure lines are less than 150 characters).
 
 * **3.8.4** Use trailing closure syntax unless the meaning of the closure is not obvious without the parameter name (an example of this could be if a method has parameters for success and failure closures).
 
@@ -951,7 +951,7 @@ Be sure to check out the full set of features available in Swift's comment marku
 
 Guidelines:
 
-* **4.1.1** 160 character column limit (like the rest of the code).
+* **4.1.1** 150 character column limit (like the rest of the code).
 
 * **4.1.2** Even if the doc comment takes up one line, use block (`/** */`).
 
