@@ -1044,3 +1044,120 @@ class Pirate {
 
 }
 ```
+
+## 5. File Organization
+
+### 5.1 UIView + UIViewController Subclasses
+
+Guidelines:
+
+* **5.1.1** Files should include properties first, then init methods, then methods
+
+* **5.1.2** Property Grouping and Ordering
+    1. Prefer using closures to init and configure properties to separate `setupFooProperty` methods
+    2. Properties should be grouped first with Public, Internal, and then Private groups.
+
+* **5.1.3** Method Grouping and Ordering
+    1. Init Methods
+    2. Overrides
+        If the class is overriding methods from a parent class, those methods should be grouped indicating which
+        parent the override belongs to. i.e. // MARK: UIView or // MARK: UIResponder for a UIView Subclass.
+    3. Internal Methods
+    4. Private Methods  
+
+Example:
+
+```swift
+// Copyright © 2018 Helix OpCo. All rights reserved.
+
+import UIKit
+
+class ExampleView: UIView {
+
+    // MARK: Internal Properties
+
+    // MARK: Private Properties
+
+    // Init and configure subview that only requires initializer call
+    private let label = HelixLabel(textStyle: EmbeddedAppTextStyle.cellHeader)
+
+    // Init and configure subview that does not require self to configure.
+    private let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+
+    // Init and configure view that requires self to configure.
+    private lazy var textField: UITextField = {
+        let textField: UITextField
+        textField.delegate = self
+        return textField
+    }()
+
+    // MARK: Init
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        setupSubviews()
+        setupConstraints()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: UIView Overrides
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+    }
+
+    // MARK: Internal Methods
+
+    func configure(viewModel: ViewModelType) {
+        
+    }
+
+    // MARK: Private
+
+    /// setupSubviews is responsible for making sure all subviews are initialized and added to view
+    /// when using the closure-initialized approach, this should be as simple as
+    /// simply adding the views to their appropriate superview.
+    private func setupSubviews() {
+        addSubview(label)
+        addSubview(imageView)
+        addSubview(textField)
+    }
+
+    /// setupConstraints should setup all constraints in top-to-bottom and left-to-right order.
+    /// If the view includes some sort of container view, the setup of those constraints should be moved
+    /// to a separate helper method or abstracted into its own UIView subclass.
+    private func setupConstraints() {
+        label.snp.makeConstraints { make in
+
+        }
+
+        imageView.snp.makeConstraints { make in
+
+        }
+
+        textField.snp.makeConstraints { make in
+
+        }
+    }
+
+}
+
+// MARK: UITextFieldDelegate
+
+extension ExampleView: UITextFieldDelegate {
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return false
+    }
+
+}
+```
